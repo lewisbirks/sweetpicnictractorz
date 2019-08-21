@@ -36,6 +36,6 @@ exports.addEmployee = function(data, readyFn) {
     db.query("INSERT INTO employee SET ?", data,
       function(error, results, fields) {
           if (error) throw error;
-          readyFn(results);
+          readyFn(data.employee_id);
       });
 };
