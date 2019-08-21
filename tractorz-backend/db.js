@@ -53,6 +53,19 @@ exports.getDepartmentById = function (id, callback, error) {
         });
   };
 
+exports.getDepartmentByName = function (name, callback, error) {
+    db.query("SELECT department_id"
+    + " FROM department WHERE department_name = ?",
+    [name],
+    function (err, rows) {
+      if (err) {
+        error(err);
+        return;
+      }
+      callback(rows);
+    });
+}
+
 exports.getDepartments = function (callback, error) {
     db.query("SELECT *"
         + " FROM department",
