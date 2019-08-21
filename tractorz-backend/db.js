@@ -27,7 +27,7 @@ exports.getEmployees = function (callback, error) {
       });
 };
 
-exports.getEmployeeId = function (id, callback, error) {
+exports.getEmployeeById = function (id, callback, error) {
   db.query("SELECT *"
       + " FROM employee WHERE employee_id = ?",
       [id],
@@ -40,8 +40,33 @@ exports.getEmployeeId = function (id, callback, error) {
       });
 };
 
-exports.addEmployee = function (data, readyFn, error) {
-  db.query("INSERT INTO employee SET ?", data,
+exports.getDepartmentById = function (id, callback, error) {
+    db.query("SELECT *"
+        + " FROM department WHERE department_id = ?",
+        [id],
+        function (err, rows) {
+          if (err) {
+            error(err);
+            return;
+          }
+          callback(rows);
+        });
+  };
+
+exports.getDepartments = function (callback, error) {
+    db.query("SELECT *"
+        + " FROM department",
+        function (err, rows) {
+          if (err) {
+            error(err);
+            return;
+          }
+          callback(rows);
+        });
+  };
+
+exports.addEmployee = function (employee, readyFn, error) {
+  db.query("INSERT INTO employee SET ?", employee,
       function (err, results, fields) {
         if (err) {
           error(err);
@@ -50,3 +75,14 @@ exports.addEmployee = function (data, readyFn, error) {
         readyFn(data.employee_id);
       });
 };
+
+exports.addDepartment = function (department, readyFn, error) {
+    db.query("INSERT INTO department SET ?", department,
+        function (err, results, fields) {
+          if (err) {
+            error(err);
+            return;
+          }
+          readyFn(results.insertID);
+        });
+  };
