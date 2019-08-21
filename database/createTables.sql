@@ -43,7 +43,6 @@ CREATE TABLE salesEmployee(
 
   CONSTRAINT `commission_rate_check` CHECK (commission_rate >= 0),
   CONSTRAINT `total_sales_check` CHECK (total_sales >= 0)
-
 );
 
 INSERT INTO department (department_name) VALUES ('Sales');
@@ -57,51 +56,3 @@ INSERT INTO employee VALUES ('CFE2343M', 'Carlos Hernadez', '22 North Street', '
 INSERT INTO employee VALUES ('CGS5437M', 'Dave Diego', '1 Rosehill Street', 'ddiego@kainos.com', 'EY132360C', '12345678', '123456', 30000, 30000, 4);
 
 INSERT INTO salesEmployee (employee_id, commission_rate) VALUES ('AMD1543F', 7.23);
-
--- create table bio(
--- 	employee_id char(8) PRIMARY KEY,
---     cv varchar(1000),
---     image mediumblob,
---     fav_tech varchar(50),
---     FOREIGN KEY (employee_id) REFERENCES employee(employee_id)
--- );
-
-
--- create table customer(
---     customer_id mediumint auto_increment PRIMARY KEY,
---     company_name varchar(50) not null,
---     key_contact varchar(50),
---     phone_num varchar(15) not null
--- );
-
--- create table project(
--- 	project_id mediumint auto_increment PRIMARY KEY,
--- 	project_name varchar(32),
---     leader_id char(8),
---     customer_id mediumint,
---     FOREIGN KEY (leader_id) REFERENCES employee(employee_id),
---     FOREIGN KEY (customer_id) REFERENCES customer(customer_id)
--- );
-
--- create table assignment(
---     employee_id char(8),
---     project_id mediumint auto_increment,
---     start_date date,
---     end_date date,
---     PRIMARY KEY (employee_id, project_id, start_date),
---     FOREIGN KEY (employee_id) REFERENCES employee(employee_id),
---     FOREIGN KEY (project_id) REFERENCES project(project_id)
--- );
-
-
-
-
--- INSERT INTO customer (customer_id, company_name, key_contact, phone_num) VALUES (1, 'Microsoft', 'Bob Ross', '07578374');
-
-
--- INSERT INTO project (project_id, project_name, leader_id, customer_id) VALUES (1, 'Very Important Microsoft Project', 'CGS5437M', 1);
--- INSERT INTO project (project_id, project_name, leader_id, customer_id) VALUES (2, 'Important Microsoft Project 2', 'CGS5437M', 1);
-
-
--- INSERT INTO assignment (employee_id, project_id, start_date, end_date) VALUES ('CGS5437M', 1, '2019-08-08', '2019-09-09');
--- INSERT INTO assignment (employee_id, project_id, start_date, end_date) VALUES ('CGS5437M', 2, '2019-08-08', '2019-09-09');
