@@ -11,7 +11,19 @@ create table employee(
     bank_number char(8) null,
     bank_sort char(6) null,
     start_salary decimal(12,2) null,
-    salary decimal(12, 2) null
+    salary decimal(12, 2) null,
+
+    constraint `name_check` check (length(name) > 0),
+    constraint `address_check` check (length(name) > 0),
+    constraint `email_check` check (
+        email regexp '([0-9a-zA-Z]([+-.\\w]?[0-9a-zA-Z]+)*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]*\\.)+[a-zA-Z]+)'),
+    constraint `nin_check` check ((length(nin) = 9 or length(nin) = 8) and 
+        nin regexp '([A-CEGHJ-PR-TW-Z][A-CEGHJ-NPR-TW-Z](?<!BG|GB|NK|KN|TN|NT|ZZ))[0-9]{6}[A-DFMP]?'),
+    constraint `bank_number_check` check (length(bank_number) = 8 and
+        bank_account_number regexp '\d{8}'),
+    constraint `bank_sort_check` check (length(bank_sort) = 6 and bank_sort regexp '\d{6}'),
+    constraint `start_salary_check` check (start_salary > 0),
+    constraint `salary_check` check (salary > 0)
 );
 
 INSERT INTO employee VALUES ('AMD1543F', 'Ann Devon', '3 George Street', 'adevon@kainos.com', 'AB123456C', '12345678', '123456', 30000, 30000);
