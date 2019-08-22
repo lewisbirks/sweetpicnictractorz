@@ -1,7 +1,9 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 
-app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
 
 const db = require('./db.js');
 
@@ -21,8 +23,16 @@ app.get('/employee', function (req, res) {
   });
 });
 
-app.post('/addemployee', function (req, res) {
-  // do thing
+
+
+app.post('/employee', function (req, res) {
+  db.addEmployee(req.body, function (employee_id) {
+    updateEmployees(function () {
+      db.getEmployeeId(employee_id, function (employee) {
+        res.send(employee);
+      })
+    })
+  })
 });
 
 app.listen(8002, function () {

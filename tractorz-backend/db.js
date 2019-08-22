@@ -23,14 +23,14 @@ exports.getEmployees = function(callback) {
 };
 
 exports.getEmployeeId = function(id, callback) {
-    db.query("SELECT id"
+    db.query("SELECT *"
     + " FROM employee WHERE employee_id = ?",
     [id],
     function(err, rows) {
       if (err) throw err;
       callback(rows);
     });
-  }
+  };
 
 exports.addEmployee = function(data, readyFn) {
     db.query("INSERT INTO employee SET ?", data,
