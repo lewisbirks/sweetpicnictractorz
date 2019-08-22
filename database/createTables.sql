@@ -35,7 +35,7 @@ CREATE TABLE employee(
 
 CREATE TABLE salesEmployee(
 	employee_id CHAR(8) PRIMARY KEY,
-  commision_rate DECIMAL(5,2), -- 999.99
+  commission_rate DECIMAL(5,2) DEFAULT 0,
   total_sales DECIMAL(12,2) DEFAULT 0,
   FOREIGN KEY (employee_id) REFERENCES employee(employee_id)
 );
@@ -44,13 +44,13 @@ INSERT INTO department (department_name) VALUES ('Sales');
 INSERT INTO department (department_name) VALUES ('Talent');
 INSERT INTO department (department_name) VALUES ('Software');
 INSERT INTO department (department_name) VALUES ('Finance');
-INSERT INTO department (department_name) VALUES ('Fun');
-
 
 INSERT INTO employee VALUES ('AMD1543F', 'Ann Devon', '3 George Street', 'adevon@kainos.com', 'WW912569A', '12345678', '123456', 30000, 30000, 1);
 INSERT INTO employee VALUES ('ARD2314F', 'Anabela Domingues', '12 George Street', 'adomingues@kainos.com', 'LP088140B', '12345678', '123456', 35000, 35000, 2);
 INSERT INTO employee VALUES ('CFE2343M', 'Carlos Hernadez', '22 North Street', 'chernadez@kainos.com', 'NE336037A', '12345678', '123456', 45000, 45000, 4);
 INSERT INTO employee VALUES ('CGS5437M', 'Dave Diego', '1 Rosehill Street', 'ddiego@kainos.com', 'EY132360C', '12345678', '123456', 30000, 30000, 4);
+
+INSERT INTO salesEmployee (employee_id, commission_rate) VALUES ('AMD1543F', 7.23);
 
 -- create table bio(
 -- 	employee_id char(8) PRIMARY KEY,
