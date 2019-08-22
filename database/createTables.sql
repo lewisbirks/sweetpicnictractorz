@@ -1,17 +1,24 @@
-drop database if exists tractorz;
-create database tractorz;
-use tractorz;
+DROP DATABASE IF EXISTS tractorz;
+CREATE DATABASE tractorz;
+USE tractorz;
 
-create table employee(
-	employee_id char(8) primary key,
-    name varchar(500) not null,
-    address varchar(500) null,
-    email varchar(500) null,
-    nin char(9) unique null,
-    bank_number char(8) null,
-    bank_sort char(6) null,
-    start_salary decimal(12,2) null,
-    salary decimal(12, 2) null,
+CREATE TABLE department(
+  department_id MEDIUMINT PRIMARY KEY AUTO_INCREMENT,
+  department_name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE employee(
+  employee_id CHAR(8) PRIMARY KEY,
+  name VARCHAR(500) NOT NULL,
+  address VARCHAR(500) NULL,
+  email VARCHAR(500) NULL,
+  nin CHAR(9) unique NULL,
+  bank_number CHAR(8) NULL,
+  bank_sort CHAR(6) NULL,
+  start_salary decimal(12,2) NULL,
+  salary decimal(12, 2) NULL,
+  department_id MEDIUMINT,
+  FOREIGN KEY (department_id) REFERENCES department(department_id),
 
     constraint `name_check` check (length(name) > 0),
     constraint `address_check` check (length(name) > 0),
@@ -26,10 +33,17 @@ create table employee(
     constraint `salary_check` check (salary > 0)
 );
 
-INSERT INTO employee VALUES ('AMD1543F', 'Ann Devon', '3 George Street', 'adevon@kainos.com', 'WW912569A', '12345678', '123456', 30000, 30000);
-INSERT INTO employee VALUES ('ARD2314F', 'Anabela Domingues', '12 George Street', 'adomingues@kainos.com', 'LP088140B', '12345678', '123456', 35000, 35000);
-INSERT INTO employee VALUES ('CFE2343M', 'Carlos Hernadez', '22 North Street', 'chernadez@kainos.com', 'NE336037A', '12345678', '123456', 45000, 45000);
-INSERT INTO employee VALUES ('CGS5437M', 'Dave Diego', '1 Rosehill Street', 'ddiego@kainos.com', 'EY132360C', '12345678', '123456', 30000, 30000);
+INSERT INTO department (department_name) VALUES ('Sales');
+INSERT INTO department (department_name) VALUES ('Talent');
+INSERT INTO department (department_name) VALUES ('Software');
+INSERT INTO department (department_name) VALUES ('Finance');
+INSERT INTO department (department_name) VALUES ('Fun');
+
+
+INSERT INTO employee VALUES ('AMD1543F', 'Ann Devon', '3 George Street', 'adevon@kainos.com', 'WW912569A', '12345678', '123456', 30000, 30000, 1);
+INSERT INTO employee VALUES ('ARD2314F', 'Anabela Domingues', '12 George Street', 'adomingues@kainos.com', 'LP088140B', '12345678', '123456', 35000, 35000, 2);
+INSERT INTO employee VALUES ('CFE2343M', 'Carlos Hernadez', '22 North Street', 'chernadez@kainos.com', 'NE336037A', '12345678', '123456', 45000, 45000, 4);
+INSERT INTO employee VALUES ('CGS5437M', 'Dave Diego', '1 Rosehill Street', 'ddiego@kainos.com', 'EY132360C', '12345678', '123456', 30000, 30000, 4);
 
 -- create table bio(
 -- 	employee_id char(8) primary key,
