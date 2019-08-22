@@ -1,7 +1,5 @@
 <div class="form-group">
     <form (ngSubmit)="addEmployee(addForm)" #addForm="ngForm">
-        <fieldset>
-            <legend>Add Employee</legend>
             <div class="form">
                 <label class="required" for="emp_name">Name</label>
                 <span aria-hidden="true" class="required">*</span>
@@ -59,6 +57,5 @@
                 <input class="pretty" [(ngModel)]="newEmployee.commission_rate" name="commission_rate" type="number" step=0.01>
             </div>
             <input id="submit" type="submit" [disabled]="!addForm.valid">
-        </fieldset>
     </form>
 </div>
