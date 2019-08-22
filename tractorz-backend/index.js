@@ -7,7 +7,11 @@ app.use(bodyParser.urlencoded());
 
 const db = require('./db.js');
 
-/////////////////////////////////////
+// Error handling is very messy but I can't think how to make it nicer
+
+////////////////////////////////////////////////////////////////////
+///                        Employee                              ///
+////////////////////////////////////////////////////////////////////
 
 app.get('/employee', function (req, res) {
   db.getEmployees(function (employees) {
@@ -54,6 +58,10 @@ app.post('/employee', function (req, res) {
   })
 });
 
+////////////////////////////////////////////////////////////////////
+///                       Department                             ///
+////////////////////////////////////////////////////////////////////
+
 app.get('/department', function (req, res) {
   db.getDepartments(function (departments) {
     res.send(departments);
@@ -66,9 +74,25 @@ app.get('/department', function (req, res) {
   });
 });
 
-// app.post('/department', function (req, res) {
-//   db.addDepart
-// })
+app.post('/department', function (req, res) {
+  db.addDepartment(req.body, function (department_id) {
+    db.getDepartmentById(department_id, function (rows) {
+      res.send(rows[0]);
+    },function (error) {
+      console.log(error.code);
+      console.log(error.sqlMessage);
+      res.status(500).send({
+        message: 'Database error. ' + error.sqlMessage
+      });
+    })
+  },function (error) {
+    console.log(error.code);
+    console.log(error.sqlMessage);
+    res.status(500).send({
+      message: 'Database error. ' + error.sqlMessage
+    });
+  })
+});
 
 app.listen(8002, function () {
   console.log('express started on port 8002');
