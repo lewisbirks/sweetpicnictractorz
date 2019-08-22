@@ -23,8 +23,6 @@ app.get('/employee', function (req, res) {
   });
 });
 
-
-
 app.post('/employee', function (req, res) {
   db.addEmployee(req.body, function (employee_id) {
     updateEmployees(function () {
