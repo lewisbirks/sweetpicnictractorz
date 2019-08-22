@@ -18,7 +18,19 @@ CREATE TABLE employee(
   start_salary decimal(12,2) NULL,
   salary decimal(12, 2) NULL,
   department_id MEDIUMINT,
-  FOREIGN KEY (department_id) REFERENCES department(department_id)
+  FOREIGN KEY (department_id) REFERENCES department(department_id),
+
+    constraint `name_check` check (length(name) > 0),
+    constraint `address_check` check (length(name) > 0),
+    constraint `email_check` check (
+        email regexp '([0-9a-zA-Z]([+-.\\w]?[0-9a-zA-Z]+)*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]*\\.)+[a-zA-Z]+)'),
+    constraint `nin_check` check ((length(nin) = 9 or length(nin) = 8) and 
+        nin regexp '([A-CEGHJ-PR-TW-Z][A-CEGHJ-NPR-TW-Z](?<!BG|GB|NK|KN|TN|NT|ZZ))[0-9]{6}[A-DFMP]?'),
+    constraint `bank_number_check` check (length(bank_number) = 8 and
+        bank_number regexp '\\d{8}'),
+    constraint `bank_sort_check` check (length(bank_sort) = 6 and bank_sort regexp '\\d{6}'),
+    constraint `start_salary_check` check (start_salary > 0),
+    constraint `salary_check` check (salary > 0)
 );
 
 INSERT INTO department (department_name) VALUES ('Sales');
@@ -27,10 +39,11 @@ INSERT INTO department (department_name) VALUES ('Software');
 INSERT INTO department (department_name) VALUES ('Finance');
 INSERT INTO department (department_name) VALUES ('Fun');
 
-INSERT INTO employee VALUES ('AMD1543F', 'Ann Devon', '3 George Street', 'adevon@kainos.com', 'AB123456C', '12345678', '123456', 30000, 30000, 1);
-INSERT INTO employee VALUES ('ARD2314F', 'Anabela Domingues', '12 George Street', 'adomingues@kainos.com', 'CD425254E', '12345678', '123456', 35000, 35000, 2);
-INSERT INTO employee VALUES ('CFE2343M', 'Carlos Hernadez', '22 North Street', 'chernadez@kainos.com', 'DE123436C', '12345678', '123456', 45000, 45000, 4);
-INSERT INTO employee VALUES ('CGS5437M', 'Dave Diego', '1 Rosehill Street', 'ddiego@kainos.com', 'PE123456W', '12345678', '123456', 30000, 30000, 4);
+
+INSERT INTO employee VALUES ('AMD1543F', 'Ann Devon', '3 George Street', 'adevon@kainos.com', 'WW912569A', '12345678', '123456', 30000, 30000, 1);
+INSERT INTO employee VALUES ('ARD2314F', 'Anabela Domingues', '12 George Street', 'adomingues@kainos.com', 'LP088140B', '12345678', '123456', 35000, 35000, 2);
+INSERT INTO employee VALUES ('CFE2343M', 'Carlos Hernadez', '22 North Street', 'chernadez@kainos.com', 'NE336037A', '12345678', '123456', 45000, 45000, 4);
+INSERT INTO employee VALUES ('CGS5437M', 'Dave Diego', '1 Rosehill Street', 'ddiego@kainos.com', 'EY132360C', '12345678', '123456', 30000, 30000, 4);
 
 -- create table bio(
 -- 	employee_id char(8) primary key,
