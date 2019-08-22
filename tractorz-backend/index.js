@@ -7,7 +7,7 @@ app.use(bodyParser.urlencoded());
 
 const db = require('./db.js');
 
-employees = [];
+/////////////////////////////////////
 
 app.get('/employee', function (req, res) {
   db.getEmployees(function (employees) {
@@ -23,7 +23,7 @@ app.get('/employee', function (req, res) {
 
 app.get('/employee/:id', function (req, res) {
   let id = req.params.id;
-  db.getEmployeeId(id, function (rows) {
+  db.getEmployeeById(id, function (rows) {
     res.send(rows[0]);
   }, function (error) {
     console.log(error.code);
@@ -36,7 +36,7 @@ app.get('/employee/:id', function (req, res) {
 
 app.post('/employee', function (req, res) {
   db.addEmployee(req.body, function (employee_id) {
-    db.getEmployeeId(employee_id, function (rows) {
+    db.getEmployeeById(employee_id, function (rows) {
       res.send(rows[0]);
     }, function (error) {
       console.log(error.code);
@@ -53,6 +53,22 @@ app.post('/employee', function (req, res) {
     });
   })
 });
+
+app.get('/department', function (req, res) {
+  db.getDepartments(function (departments) {
+    res.send(departments);
+  }, function (error) {
+    console.log(error.code);
+    console.log(error.sqlMessage);
+    res.status(500).send({
+      message: 'Database error. ' + error.sqlMessage
+    });
+  });
+});
+
+// app.post('/department', function (req, res) {
+//   db.addDepart
+// })
 
 app.listen(8002, function () {
   console.log('express started on port 8002');
