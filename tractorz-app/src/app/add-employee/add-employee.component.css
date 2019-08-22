@@ -8,6 +8,6 @@ p {
     margin: 5px;
 }
   
-.ng-invalid {
+input.ng-invalid {
 background: lightcoral;
 }

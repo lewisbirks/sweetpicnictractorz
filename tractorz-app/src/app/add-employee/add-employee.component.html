@@ -27,8 +27,7 @@
         </div>
         <div class="form">
             <p>Department:</p>
-            <select [(ngModel)]="selectedDepartment" required>
-                <option value="" selected>All</option>
+            <select [(ngModel)]="newEmployee.department" name="department" required>
                 <option *ngFor="let department of data.departments" value="{{department}}">{{department}}</option>
             </select>
         </div>
