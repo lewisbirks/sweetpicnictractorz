@@ -16,8 +16,8 @@ db.connect(function (err) {
 });
 
 exports.getEmployees = function (callback, error) {
-  db.query("SELECT *"
-      + " FROM employee",
+  db.query("SELECT employee_id, name, address, email, nin, bank_number, bank_sort, start_salary, salary, department_name as `department`"
+      + " FROM employee join department using(department_id)",
       function (err, rows) {
         if (err) {
           error(err);
@@ -28,8 +28,8 @@ exports.getEmployees = function (callback, error) {
 };
 
 exports.getEmployeeById = function (id, callback, error) {
-  db.query("SELECT *"
-      + " FROM employee WHERE employee_id = ?",
+  db.query("SELECT employee_id, name, address, email, nin, bank_number, bank_sort, start_salary, salary, department_name as `department`"
+      + " FROM employee join department using(department_id) WHERE employee_id = ?",
       [id],
       function (err, rows) {
         if (err) {
