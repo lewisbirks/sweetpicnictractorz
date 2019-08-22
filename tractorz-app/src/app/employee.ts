@@ -10,4 +10,6 @@ export class Employee {
     salary: number;
     department_name: string;
     department_id: number;
+    commission_rate: number;
+    total_sales: number;
 }

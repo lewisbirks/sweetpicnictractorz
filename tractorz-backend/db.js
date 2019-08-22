@@ -17,7 +17,7 @@ db.connect(function (err) {
 
 exports.getEmployees = function (callback, error) {
   db.query("SELECT *"
-    + " FROM employee LEFT JOIN department USING(department_id)",
+    + " FROM employee LEFT JOIN department USING(department_id) LEFT JOIN salesEmployee USING(employee_id)",
     function (err, rows) {
       if (err) {
         error(err);
@@ -29,7 +29,7 @@ exports.getEmployees = function (callback, error) {
 
 exports.getEmployeeById = function (id, callback, error) {
   db.query("SELECT *"
-    + " FROM employee LEFT JOIN department USING(department_id) WHERE employee_id = ?",
+    + " FROM employee LEFT JOIN department USING(department_id) LEFT JOIN salesEmployee USING(employee_id) WHERE employee_id = ?",
     [id],
     function (err, rows) {
       if (err) {

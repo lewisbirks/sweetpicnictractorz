@@ -12,6 +12,8 @@
         <div>Address: {{employee.address}}</div>
         <div>Email: {{employee.email}}</div>
         <div>Department: {{employee.department_name}}</div>
+        <div *ngIf="employee.commission_rate != null">Commission: {{employee.commission_rate}}%</div>
+        <div *ngIf="employee.total_sales != null">Total sales: {{employee.total_sales}}</div>
     </li>
 
 </div>

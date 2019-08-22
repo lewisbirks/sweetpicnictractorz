@@ -34,7 +34,7 @@
             <div class="form">
                 <label for="emp_startsal">Starting Salary</label>
                 <input class="pretty" [(ngModel)]="newEmployee.start_salary" name="emp_startsal" type="number"
-                    placeholder="Starting Salary">
+                    placeholder="Starting Salary" step="0.01">
             </div>
             <div class="form">
                 <label for="emp_bankn">Account Number</label>
@@ -49,10 +49,14 @@
                 <div class="error" *ngIf="addForm.hasError('minlength', 'emp_banks')">Minimum length is 6</div>
             </div>
             <div class="form">
-                <p>Department:</p>
+                <label for="department_id">Department:</label>
                 <select class="pretty" [(ngModel)]="newEmployee.department_id" name="department_id" required>
-                    <option *ngFor="let department of data.departments" value="{{department.department_id}}">{{department.department_name}}</option>
+                    <option class="pretty" *ngFor="let department of data.departments" value="{{department.department_id}}">{{department.department_name}}</option>
                 </select>
+            </div>
+            <div class="form" *ngIf="newEmployee.department_id==1">
+                <label>Commission rate:</label>
+                <input class="pretty" [(ngModel)]="newEmployee.commission_rate" name="commission_rate" type="number" step=0.01>
             </div>
             <input id="submit" type="submit" [disabled]="!addForm.valid">
         </fieldset>
