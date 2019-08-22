@@ -40,14 +40,16 @@ app.post('/employee', function (req, res) {
       res.send(employee);
     }, function (error) {
       console.log(error.code);
+      console.log(error.sqlMessage);
       res.status(500).send({
-        message: 'Database error'
+        message: 'Database error. ' + error.sqlMessage
       });
     })
   }, function (error) {
     console.log(error.code);
+    console.log(error.sqlMessage);
     res.status(500).send({
-      message: 'Database error'
+      message: 'Database error. ' + error.sqlMessage
     });
   })
 });
