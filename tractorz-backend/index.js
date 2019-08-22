@@ -39,22 +39,13 @@ app.get('/employee/:id', function (req, res) {
 });
 
 app.post('/employee', function (req, res) {
-  let body = req.body;
-  let dp_name = body.department;
-  db.getDepartmentByName(dp_name, function (rows) {
-    let department_id = rows[0].department_id;
-    delete body.department;
-    body.department_id = department_id;
-    db.addEmployee(body, function (employee_id) {
-      db.getEmployeeById(employee_id, function (rows) {
-        res.send(rows[0]);
-      }, function (error) {
-        console.log(error.code);
-        console.log(error.sqlMessage);
-        res.status(500).send({
-          message: 'Database error. ' + error.sqlMessage
-        });
-      })
+  addEmployee(req.body, res);
+});
+
+function addEmployee(employee, res) {
+  db.addEmployee(employee, function (employee_id) {
+    db.getEmployeeById(employee_id, function (rows) {
+      res.send(rows[0]);
     }, function (error) {
       console.log(error.code);
       console.log(error.sqlMessage);
@@ -62,8 +53,15 @@ app.post('/employee', function (req, res) {
         message: 'Database error. ' + error.sqlMessage
       });
     })
-  });
-});
+  }, function (error) {
+    console.log(error.code);
+    console.log(error.sqlMessage);
+    res.status(500).send({
+      message: 'Database error. ' + error.sqlMessage
+    });
+  })
+
+}
 
 ////////////////////////////////////////////////////////////////////
 ///                       Department                             ///
@@ -85,14 +83,14 @@ app.post('/department', function (req, res) {
   db.addDepartment(req.body, function (department_id) {
     db.getDepartmentById(department_id, function (rows) {
       res.send(rows[0]);
-    },function (error) {
+    }, function (error) {
       console.log(error.code);
       console.log(error.sqlMessage);
       res.status(500).send({
         message: 'Database error. ' + error.sqlMessage
       });
     })
-  },function (error) {
+  }, function (error) {
     console.log(error.code);
     console.log(error.sqlMessage);
     res.status(500).send({
@@ -100,6 +98,14 @@ app.post('/department', function (req, res) {
     });
   })
 });
+
+////////////////////////////////////////////////////////////////////
+///                       Sales Employee                         ///
+////////////////////////////////////////////////////////////////////
+
+// function addSalesEmployee(fullEmployee, res) {
+//   let
+// }
 
 app.listen(8002, function () {
   console.log('express started on port 8002');
