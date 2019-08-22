@@ -9,9 +9,9 @@ p {
 }
 .pretty:invalid {
     border-color: rgb(230, 65, 65);
-    box-shadow: 5px 10px rgb(250, 143, 143);
-    
+    box-shadow: 5px 10px rgb(250, 143, 143);  
 }
+
 input, label {
     display:block;
 }
@@ -22,11 +22,18 @@ input, label {
   border: 2px solid grey;
   border-radius: 4px;
 }
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
 .pretty:focus {
     border: 3px solid #555;
   }
   input[type=submit]{
-    background-color: darkgray;
+    background-color: rgb(117, 115, 115);
     border: none;
     color: white;
     padding: 10px 20px;
@@ -36,10 +43,11 @@ input, label {
     border-radius: 6px;
   }
   input[type=submit]:hover{
-    background-color: rgb(117, 115, 115);
+    background-color: darkgray;
   }
-  input[type=submit]{
-    background-color: rgb(66, 63, 63);
+  input[type=submit]:disabled{
+    background-color: rgb(233, 220, 220);
+
   }
   .error{
       font-size: 14px;
@@ -47,4 +55,10 @@ input, label {
   }
   *:focus {
     outline: none;
+}
+.required{
+    display: inline-block;
+}
+span{
+    color: red;
 }

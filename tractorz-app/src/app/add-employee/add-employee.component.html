@@ -3,12 +3,14 @@
         <fieldset>
             <legend>Add Employee</legend>
             <div class="form">
-                <label for="emp_name">Name</label>
+                <label class="required" for="emp_name">Name</label>
+                <span aria-hidden="true" class="required">*</span>
                 <input class="pretty" [(ngModel)]="newEmployee.name" name="emp_name" placeholder="Name" required>
                 <div class="error" *ngIf="addForm.hasError('required', 'emp_name')">Name is required</div>
             </div>
             <div class="form">
-                <label for="emp_id">ID</label>
+                <label class="required" for="emp_id">ID</label>
+                <span aria-hidden="true" class="required">*</span>
                 <input class="pretty" [(ngModel)]="newEmployee.employee_id" name="emp_id" placeholder="ID" required
                     minlength="8">
                 <div class="error" *ngIf="addForm.hasError('required', 'emp_id')">ID is required</div>
@@ -17,6 +19,7 @@
                 <label for="emp_email">Email address</label>
                 <input class="pretty" [(ngModel)]="newEmployee.email" name="emp_email" placeholder="Email" type="email"
                     pattern="([0-9a-zA-Z]([+-.\w]?[0-9a-zA-Z]+)*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]*\.)+[a-zA-Z]+)">
+                <div class="error" *ngIf="addForm.hasError('pattern', 'emp_email')">Email is not valid</div>
             </div>
             <div class="form">
                 <label for="emp_address">Address</label>
@@ -26,6 +29,7 @@
                 <label for="emp_nin">National Insurance Number</label>
                 <input class="pretty" [(ngModel)]="newEmployee.nin" name="emp_nin" placeholder="NIN"
                     pattern="([A-CEGHJ-PR-TW-Z][A-CEGHJ-NPR-TW-Z](?<!BG|GB|NK|KN|TN|NT|ZZ))[0-9]{6}[A-DFMP]?">
+                <div class="error" *ngIf="addForm.hasError('pattern', 'emp_nin')">NIN is not valid</div>
             </div>
             <div class="form">
                 <label for="emp_startsal">Starting Salary</label>
@@ -36,11 +40,13 @@
                 <label for="emp_bankn">Account Number</label>
                 <input class="pretty" [(ngModel)]="newEmployee.bank_number" name="emp_bankn" type="text"
                     placeholder="Bank Account No." minlength="8">
+                <div class="error" *ngIf="addForm.hasError('minlength', 'emp_bankn')">Minimum length is 8</div>
             </div>
             <div class="form">
                 <label for="emp_banks">Sort Code</label>
                 <input class="pretty" [(ngModel)]="newEmployee.bank_sort" name="emp_banks" placeholder="Sort Code"
                     minlength="6">
+                <div class="error" *ngIf="addForm.hasError('minlength', 'emp_banks')">Minimum length is 6</div>
             </div>
             <input id="submit" type="submit" [disabled]="!addForm.valid">
         </fieldset>
