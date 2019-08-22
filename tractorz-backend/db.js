@@ -15,12 +15,13 @@ db.connect(function (err) {
   console.log("Connected to MySQL");
 });
 
-exports.getEmployees = function (callback) {
+exports.getEmployees = function (callback, error) {
   db.query("SELECT *"
       + " FROM employee",
       function (err, rows) {
         if (err) {
-          throw err;
+          error(err);
+          return;
         }
         callback(rows);
       });
