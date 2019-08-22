@@ -26,23 +26,25 @@ exports.getEmployees = function (callback) {
       });
 };
 
-exports.getEmployeeId = function (id, callback) {
+exports.getEmployeeId = function (id, callback, error) {
   db.query("SELECT *"
       + " FROM employee WHERE employee_id = ?",
       [id],
       function (err, rows) {
         if (err) {
-          throw err;
+          error(err);
+          return;
         }
         callback(rows);
       });
 };
 
-exports.addEmployee = function (data, readyFn) {
+exports.addEmployee = function (data, readyFn, error) {
   db.query("INSERT INTO employee SET ?", data,
-      function (error, results, fields) {
-        if (error) {
-          throw error;
+      function (err, results, fields) {
+        if (err) {
+          error(err);
+          return;
         }
         readyFn(data.employee_id);
       });

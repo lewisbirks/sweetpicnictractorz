@@ -10,24 +10,45 @@ const db = require('./db.js');
 employees = [];
 
 app.get('/employee', function (req, res) {
-  db.getEmployees(function (employees) {
-    res.send(employees);
-  });
+  try {
+    db.getEmployees(function (employees) {
+      res.send(employees);
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: 'Database error'
+    });
+  }
 });
-
 
 app.get('/employee/:id', function (req, res) {
   let id = req.params.id;
-  db.getEmployeeId(id, function (employee) {
-    res.send(employee);
-  })
+  try {
+    db.getEmployeeId(id, function (employee) {
+      res.send(employee);
+    })
+  } catch (e) {
+    res.status(500).send({
+      message: 'Database error'
+    });
+  }
 });
 
 app.post('/employee', function (req, res) {
   db.addEmployee(req.body, function (employee_id) {
     db.getEmployeeId(employee_id, function (employee) {
       res.send(employee);
+    }, function (error) {
+      console.log(error.code);
+      res.status(500).send({
+        message: 'Database error'
+      });
     })
+  }, function (error) {
+    console.log(error.code);
+    res.status(500).send({
+      message: 'Database error'
+    });
   })
 });
 
