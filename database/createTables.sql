@@ -22,7 +22,7 @@ CREATE TABLE employee(
   department_id SMALLINT UNSIGNED,
   FOREIGN KEY (department_id) REFERENCES department(department_id),
 
-  CONSTRAINT `name_check` CHECK (LENGTH(name) > 0),
+  CONSTRAINT `emp_name_check` CHECK (LENGTH(name) > 0),
   CONSTRAINT `address_check` CHECK (LENGTH(name) > 0),
   CONSTRAINT `email_check` CHECK (
       email regexp '([0-9a-zA-Z]([+-.\\w]?[0-9a-zA-Z]+)*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]*\\.)+[a-zA-Z]+)'),
@@ -42,7 +42,7 @@ CREATE TABLE salesEmployee(
   FOREIGN KEY (employee_id) REFERENCES employee(employee_id),
 
   CONSTRAINT `commission_rate_check` CHECK (commission_rate >= 0),
-  CONSTRAINT `total_sales_check` CHECK (start_salary >= 0)
+  CONSTRAINT `total_sales_check` CHECK (total_sales >= 0)
 
 );
 
