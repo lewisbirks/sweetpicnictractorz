@@ -1,8 +1,18 @@
-<div class="main">
+<div class="container">
   <h1>
     Welcome to {{ title }}!
   </h1>
-  <tractorz-add-employee></tractorz-add-employee>
-  <h2>Employee Detail</h2>
-  <tractorz-emp-details></tractorz-emp-details>
+  <ngb-tabset>
+    <ngb-tab title="Add">
+      <ng-template ngbTabContent>
+        <tractorz-add-employee></tractorz-add-employee>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Show_Employees">
+      <ng-template ngbTabContent>
+        <h2>Employee Details</h2>
+        <tractorz-emp-details></tractorz-emp-details>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
 </div>

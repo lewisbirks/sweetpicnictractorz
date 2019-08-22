@@ -8,6 +8,7 @@ import { HttpClient } from "@angular/common/http";
 export class DataService {
 
   employees: Employee[] = [];
+  departements: String[] = [];
 
   constructor(private http: HttpClient) {
     this.updateEmployees();
@@ -16,6 +17,12 @@ export class DataService {
   public updateEmployees(): void {
     this.http.get<Employee[]>('/api/employee').subscribe(employees => {
       this.employees = employees;
+    });
+  }
+
+  public updateDepartements(): void {
+    this.http.get<String[]>('/api/departements').subscribe(departements => {
+      this.departements = departements;
     });
   }
 

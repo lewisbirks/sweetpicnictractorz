@@ -12,6 +12,7 @@ export class AddEmployeeComponent implements OnInit {
   public newEmployee: Employee;
   data: DataService;
 
+
   constructor(dataService: DataService) {
     this.data = dataService;
   }

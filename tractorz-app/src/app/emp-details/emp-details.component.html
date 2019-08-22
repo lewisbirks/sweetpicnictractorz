@@ -1,5 +1,12 @@
 <div>
-    <li *ngFor="let employee of data.employees">
+    <select>
+        <option value="" disabled selected>Choose Departement</option>
+        <option value="">Fake boy</option>
+        <option *ngFor="let departement of data.departements" value="{{ departement }}">{{departement}}</option>
+    </select>
+</div>
+<div>
+    <li *ngFor=" let employee of data.employees">
         <div>
             Employee Id: {{employee.employee_id}}
         </div>
