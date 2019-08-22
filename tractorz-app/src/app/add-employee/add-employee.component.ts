@@ -19,6 +19,7 @@ export class AddEmployeeComponent implements OnInit {
   addEmployee(addForm): void {
     console.log("addEmployee");
     if (addForm.valid) {
+      console.log(this.newEmployee);
       this.data.addEmployee(this.newEmployee).then(employee => {
         console.log(employee);
         this.newEmployee = new Employee();
