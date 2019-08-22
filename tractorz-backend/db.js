@@ -20,4 +20,4 @@ exports.getEmployees = function(callback) {
       if (err) throw err;
       callback(rows);
     });
-}
+};
