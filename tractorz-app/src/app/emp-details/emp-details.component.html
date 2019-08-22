@@ -1,25 +1,17 @@
-<div>
+<div class="department-filter">
     <span>Filter by department: </span>
     <select [(ngModel)]="selectedDepartment">
         <option value="" selected>All</option>
-        <option value="Ann Devon">Ann Devon</option>
         <option *ngFor="let department of data.departments" value="{{department}}">{{department}}</option>
     </select>
 </div>
 <div>
     <li *ngFor=" let employee of data.employees | nameFilter:selectedDepartment">
-        <div>
-            Employee Id: {{employee.employee_id}}
-        </div>
-        <div>
-            Employee Name: {{employee.name}}
-        </div>
-        <div>
-            Employee Address: {{employee.address}}
-        </div>
-        <div>
-            Employee email: {{employee.email}}
-        </div>
+        <div>ID: {{employee.employee_id}}</div>
+        <div>Name: {{employee.name}}</div>
+        <div>Address: {{employee.address}}</div>
+        <div>Email: {{employee.email}}</div>
+        <div>Department: {{employee.department}}</div>
     </li>
 
 </div>

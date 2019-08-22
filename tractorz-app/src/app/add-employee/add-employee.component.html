@@ -25,6 +25,13 @@
         <div class="form">
             <p>Sort Code:</p><input [(ngModel)]="newEmployee.bank_sort" name="emp_banks" placeholder="Sort Code" minlength="6">
         </div>
+        <div class="form">
+            <p>Department:</p>
+            <select [(ngModel)]="selectedDepartment" required>
+                <option value="" selected>All</option>
+                <option *ngFor="let department of data.departments" value="{{department}}">{{department}}</option>
+            </select>
+        </div>
         <input type="submit" [disabled]="!addForm.valid">
     </fieldset>
 </form>

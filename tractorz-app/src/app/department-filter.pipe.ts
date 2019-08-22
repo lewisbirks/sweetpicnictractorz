@@ -11,7 +11,7 @@ export class DepartmentFilterPipe implements PipeTransform {
     if (!filterText) return employees;
 
     return employees.filter(e => {
-      return e.name.toLowerCase().includes(filterText.toLowerCase());
+      return e.department.toLowerCase().includes(filterText.toLowerCase());
     });
     
   }
