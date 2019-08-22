@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Employee } from './employee';
 import { HttpClient } from "@angular/common/http";
+import { Department } from './department';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import { HttpClient } from "@angular/common/http";
 export class DataService {
 
   employees: Employee[] = [];
-  departments: String[] = [];
+  departments: Department[] = [];
 
   constructor(private http: HttpClient) {
     this.updateEmployees();
@@ -22,8 +23,9 @@ export class DataService {
   }
 
   public updateDepartments(): void {
-    this.http.get<{department_id: number, department_name: String}[]>('/api/department').subscribe(departments => {
-      this.departments = departments.map(x => x.department_name);
+    this.http.get<Department[]>('/api/department').subscribe(departments => {
+      this.departments = departments;
+      console.log(departments);
     });
   }
 

@@ -2,16 +2,16 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { Employee } from './employee';
 
 @Pipe({
-  name: 'nameFilter'
+  name: 'departmentFilter'
 })
 export class DepartmentFilterPipe implements PipeTransform {
 
-  transform(employees: Employee[], filterText: string): Employee[] {
+  transform(employees: Employee[], departmentID: string): Employee[] {
     if (!employees) return [];
-    if (!filterText) return employees;
+    if (!departmentID) return employees;
 
     return employees.filter(e => {
-      return e.department.toLowerCase().includes(filterText.toLowerCase());
+      return e.department_id === parseInt(departmentID);
     });
     
   }

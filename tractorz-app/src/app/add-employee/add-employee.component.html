@@ -27,8 +27,8 @@
         </div>
         <div class="form">
             <p>Department:</p>
-            <select [(ngModel)]="newEmployee.department" name="department" required>
-                <option *ngFor="let department of data.departments" value="{{department}}">{{department}}</option>
+            <select [(ngModel)]="newEmployee.department_id" name="department_id" required>
+                <option *ngFor="let department of data.departments" value="{{department.department_id}}">{{department.department_name}}</option>
             </select>
         </div>
         <input type="submit" [disabled]="!addForm.valid">
