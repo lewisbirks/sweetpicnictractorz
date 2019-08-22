@@ -85,7 +85,7 @@ exports.addEmployee = function (employee, readyFn, error) {
           error(err);
           return;
         }
-        readyFn(data.employee_id);
+        readyFn(employee.employee_id);
       });
 };
 
@@ -96,6 +96,6 @@ exports.addDepartment = function (department, readyFn, error) {
             error(err);
             return;
           }
-          readyFn(results.insertID);
+          readyFn(results.insertId);
         });
   };

@@ -39,9 +39,22 @@ app.get('/employee/:id', function (req, res) {
 });
 
 app.post('/employee', function (req, res) {
-  db.addEmployee(req.body, function (employee_id) {
-    db.getEmployeeById(employee_id, function (rows) {
-      res.send(rows[0]);
+  let body = req.body;
+  let dp_name = body.department;
+  db.getDepartmentByName(dp_name, function (rows) {
+    let department_id = rows[0].department_id;
+    delete body.department;
+    body.department_id = department_id;
+    db.addEmployee(body, function (employee_id) {
+      db.getEmployeeById(employee_id, function (rows) {
+        res.send(rows[0]);
+      }, function (error) {
+        console.log(error.code);
+        console.log(error.sqlMessage);
+        res.status(500).send({
+          message: 'Database error. ' + error.sqlMessage
+        });
+      })
     }, function (error) {
       console.log(error.code);
       console.log(error.sqlMessage);
@@ -49,13 +62,7 @@ app.post('/employee', function (req, res) {
         message: 'Database error. ' + error.sqlMessage
       });
     })
-  }, function (error) {
-    console.log(error.code);
-    console.log(error.sqlMessage);
-    res.status(500).send({
-      message: 'Database error. ' + error.sqlMessage
-    });
-  })
+  });
 });
 
 ////////////////////////////////////////////////////////////////////
