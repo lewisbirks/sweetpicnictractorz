@@ -25,8 +25,8 @@ app.get('/employee/:id', function (req, res) {
 
 app.post('/employee', function (req, res) {
   db.addEmployee(req.body, function (employee_id) {
-    db.getEmployeeId(employee_id, function (employee) {
-      res.send(employee);
+    db.getEmployeeId(employee_id, function (rows) {
+      res.send(rows[0]);
     })
   })
 });
