@@ -3,7 +3,7 @@ CREATE DATABASE tractorz;
 USE tractorz;
 
 CREATE TABLE department(
-  department_id MEDIUMINT PRIMARY KEY AUTO_INCREMENT,
+  department_id SMALLINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
   department_name VARCHAR(100) NOT NULL
 );
 
@@ -12,12 +12,12 @@ CREATE TABLE employee(
   name VARCHAR(500) NOT NULL,
   address VARCHAR(500) NULL,
   email VARCHAR(500) NULL,
-  nin CHAR(9) unique NULL,
+  nin CHAR(9) unique NULL UNIQUE,
   bank_number CHAR(8) NULL,
   bank_sort CHAR(6) NULL,
   start_salary decimal(12,2) NULL,
   salary decimal(12, 2) NULL,
-  department_id MEDIUMINT,
+  department_id SMALLINT UNSIGNED,
   FOREIGN KEY (department_id) REFERENCES department(department_id),
 
     constraint `name_check` check (length(name) > 0),
