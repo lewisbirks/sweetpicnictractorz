@@ -1,24 +1,34 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 
-app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
 
 const db = require('./db.js');
 
 employees = [];
 
-function updateEmployees(ready) {
-  db.getEmployees(function (rows) {
-        this.employees = rows;
-        ready();
-      }
-  )
-}
-
 app.get('/employee', function (req, res) {
-  updateEmployees(function () {
+  db.getEmployees(function (employees) {
     res.send(employees);
   });
+});
+
+
+app.get('/employee/:id', function (req, res) {
+  let id = req.params.id;
+  db.getEmployeeId(id, function (employee) {
+    res.send(employee);
+  })
+});
+
+app.post('/employee', function (req, res) {
+  db.addEmployee(req.body, function (employee_id) {
+    db.getEmployeeId(employee_id, function (rows) {
+      res.send(rows[0]);
+    })
+  })
 });
 
 app.listen(8002, function () {

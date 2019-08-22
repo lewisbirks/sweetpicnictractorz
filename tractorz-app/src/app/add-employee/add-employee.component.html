@@ -5,22 +5,25 @@
             <p>Name:</p><input [(ngModel)]="newEmployee.name" name="emp_name" placeholder="Name" required>
         </div>
         <div class="form">
-            <p>ID:</p><input [(ngModel)]="newEmployee.employee_id" name="emp_id" placeholder="ID" required>
+            <p>ID:</p><input [(ngModel)]="newEmployee.employee_id" name="emp_id" placeholder="ID" required minlength="8">
         </div>
         <div class="form">
-            <p>Email:</p><input [(ngModel)]="newEmployee.email" name="emp_email" placeholder="Email">
+            <p>Email:</p><input [(ngModel)]="newEmployee.email" name="emp_email" placeholder="Email" type="email" pattern="([0-9a-zA-Z]([+-.\w]?[0-9a-zA-Z]+)*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]*\.)+[a-zA-Z]+)">
         </div>
         <div class="form">
-            <p>Address:</p><input [(ngModel)]="newEmployee.nin" name="emp_nin" placeholder="Address">
+            <p>Address:</p><input [(ngModel)]="newEmployee.address" name="emp_address" placeholder="Address">
         </div>
         <div class="form">
-            <p>Starting Salary:</p><input [(ngModel)]="newEmployee.start_salary" name="emp_startsal" placeholder="Starting Salary">
+            <p>National Insurance Number:</p><input [(ngModel)]="newEmployee.nin" name="emp_nin" placeholder="National Insurance Number" pattern="([A-CEGHJ-PR-TW-Z][A-CEGHJ-NPR-TW-Z](?<!BG|GB|NK|KN|TN|NT|ZZ))[0-9]{6}[A-DFMP]?">
         </div>
         <div class="form">
-            <p>Bank Account No.:</p><input [(ngModel)]="newEmployee.bank_number" name="emp_bankn" placeholder="Bank Account No.">
+            <p>Starting Salary:</p><input [(ngModel)]="newEmployee.start_salary" name="emp_startsal" type="number" placeholder="Starting Salary">
         </div>
         <div class="form">
-            <p>Sort Code:</p><input [(ngModel)]="newEmployee.bank_sort" name="emp_banks" placeholder="Sort Code">
+            <p>Bank Account No.:</p><input [(ngModel)]="newEmployee.bank_number" name="emp_bankn" type="text" placeholder="Bank Account No." minlength="8">
+        </div>
+        <div class="form">
+            <p>Sort Code:</p><input [(ngModel)]="newEmployee.bank_sort" name="emp_banks" placeholder="Sort Code" minlength="6">
         </div>
         <input type="submit" [disabled]="!addForm.valid">
     </fieldset>

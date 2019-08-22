@@ -7,3 +7,7 @@ p {
     padding: 0px;
     margin: 5px;
 }
+  
+.ng-invalid {
+background: lightcoral;
+}
