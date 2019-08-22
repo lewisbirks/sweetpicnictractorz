@@ -23,6 +23,13 @@ app.get('/employee', function (req, res) {
   });
 });
 
+app.get('/employee/:id', function (req, res) {
+  let id = req.params.id;
+  db.getEmployeeId(id, function (employee) {
+    res.send(employee);
+  })
+});
+
 app.post('/employee', function (req, res) {
   db.addEmployee(req.body, function (employee_id) {
     updateEmployees(function () {
