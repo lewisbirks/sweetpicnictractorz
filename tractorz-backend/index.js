@@ -9,19 +9,12 @@ const db = require('./db.js');
 
 employees = [];
 
-function updateEmployees(ready) {
-  db.getEmployees(function (rows) {
-        this.employees = rows;
-        ready();
-      }
-  )
-}
-
 app.get('/employee', function (req, res) {
-  updateEmployees(function () {
+  db.getEmployees(function (employees) {
     res.send(employees);
   });
 });
+
 
 app.get('/employee/:id', function (req, res) {
   let id = req.params.id;
@@ -32,10 +25,8 @@ app.get('/employee/:id', function (req, res) {
 
 app.post('/employee', function (req, res) {
   db.addEmployee(req.body, function (employee_id) {
-    updateEmployees(function () {
-      db.getEmployeeId(employee_id, function (employee) {
-        res.send(employee);
-      })
+    db.getEmployeeId(employee_id, function (employee) {
+      res.send(employee);
     })
   })
 });
