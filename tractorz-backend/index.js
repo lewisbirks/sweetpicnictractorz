@@ -21,6 +21,10 @@ app.get('/employee', function (req, res) {
   });
 });
 
+app.post('/addemployee', function (req, res) {
+  // do thing
+});
+
 app.listen(8002, function () {
   console.log('express started on port 8002');
 });
