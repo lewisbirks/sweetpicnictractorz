@@ -8,6 +8,7 @@ import { DataService } from '../data.service';
 })
 export class EmpDetailsComponent implements OnInit {
   data: DataService;
+  selectedDepartment = "";
 
   constructor(dataService: DataService) {
     this.data = dataService;
