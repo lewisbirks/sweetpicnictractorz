@@ -7,7 +7,11 @@ app.use(bodyParser.urlencoded());
 
 const db = require('./db.js');
 
-employees = [];
+// Error handling is very messy but I can't think how to make it nicer
+
+////////////////////////////////////////////////////////////////////
+///                        Employee                              ///
+////////////////////////////////////////////////////////////////////
 
 app.get('/employee', function (req, res) {
   db.getEmployees(function (employees) {
@@ -23,7 +27,7 @@ app.get('/employee', function (req, res) {
 
 app.get('/employee/:id', function (req, res) {
   let id = req.params.id;
-  db.getEmployeeId(id, function (rows) {
+  db.getEmployeeById(id, function (rows) {
     res.send(rows[0]);
   }, function (error) {
     console.log(error.code);
@@ -35,8 +39,49 @@ app.get('/employee/:id', function (req, res) {
 });
 
 app.post('/employee', function (req, res) {
-  db.addEmployee(req.body, function (employee_id) {
-    db.getEmployeeId(employee_id, function (rows) {
+  addEmployee(req.body, res);
+});
+
+function addEmployee(employee, res) {
+  db.addEmployee(employee, function (employee_id) {
+    db.getEmployeeById(employee_id, function (rows) {
+      res.send(rows[0]);
+    }, function (error) {
+      console.log(error.code);
+      console.log(error.sqlMessage);
+      res.status(500).send({
+        message: 'Database error. ' + error.sqlMessage
+      });
+    })
+  }, function (error) {
+    console.log(error.code);
+    console.log(error.sqlMessage);
+    res.status(500).send({
+      message: 'Database error. ' + error.sqlMessage
+    });
+  })
+
+}
+
+////////////////////////////////////////////////////////////////////
+///                       Department                             ///
+////////////////////////////////////////////////////////////////////
+
+app.get('/department', function (req, res) {
+  db.getDepartments(function (departments) {
+    res.send(departments);
+  }, function (error) {
+    console.log(error.code);
+    console.log(error.sqlMessage);
+    res.status(500).send({
+      message: 'Database error. ' + error.sqlMessage
+    });
+  });
+});
+
+app.post('/department', function (req, res) {
+  db.addDepartment(req.body, function (department_id) {
+    db.getDepartmentById(department_id, function (rows) {
       res.send(rows[0]);
     }, function (error) {
       console.log(error.code);
@@ -53,6 +98,14 @@ app.post('/employee', function (req, res) {
     });
   })
 });
+
+////////////////////////////////////////////////////////////////////
+///                       Sales Employee                         ///
+////////////////////////////////////////////////////////////////////
+
+// function addSalesEmployee(fullEmployee, res) {
+//   let
+// }
 
 app.listen(8002, function () {
   console.log('express started on port 8002');

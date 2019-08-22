@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Employee } from './employee';
 import { HttpClient } from "@angular/common/http";
+import { Department } from './department';
 
 @Injectable({
   providedIn: 'root'
@@ -8,10 +9,11 @@ import { HttpClient } from "@angular/common/http";
 export class DataService {
 
   employees: Employee[] = [];
-  departements: String[] = [];
+  departments: Department[] = [];
 
   constructor(private http: HttpClient) {
     this.updateEmployees();
+    this.updateDepartments();
   }
 
   public updateEmployees(): void {
@@ -20,9 +22,9 @@ export class DataService {
     });
   }
 
-  public updateDepartements(): void {
-    this.http.get<String[]>('/api/departements').subscribe(departements => {
-      this.departements = departements;
+  public updateDepartments(): void {
+    this.http.get<Department[]>('/api/department').subscribe(departments => {
+      this.departments = departments;
     });
   }
 

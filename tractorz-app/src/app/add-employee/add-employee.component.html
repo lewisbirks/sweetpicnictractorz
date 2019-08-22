@@ -48,6 +48,12 @@
                     minlength="6">
                 <div class="error" *ngIf="addForm.hasError('minlength', 'emp_banks')">Minimum length is 6</div>
             </div>
+            <div class="form">
+                <p>Department:</p>
+                <select class="pretty" [(ngModel)]="newEmployee.department_id" name="department_id" required>
+                    <option *ngFor="let department of data.departments" value="{{department.department_id}}">{{department.department_name}}</option>
+                </select>
+            </div>
             <input id="submit" type="submit" [disabled]="!addForm.valid">
         </fieldset>
     </form>

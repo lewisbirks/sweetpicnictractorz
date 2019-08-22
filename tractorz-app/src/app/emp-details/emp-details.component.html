@@ -1,24 +1,17 @@
-<div>
-    <select>
-        <option value="" disabled selected>Choose Departement</option>
-        <option value="">Fake boy</option>
-        <option *ngFor="let departement of data.departements" value="{{ departement }}">{{departement}}</option>
+<div class="department-filter">
+    <span>Filter by department: </span>
+    <select [(ngModel)]="selectedDepartment">
+        <option value="" selected>All</option>
+        <option *ngFor="let department of data.departments" value="{{department.department_id}}">{{department.department_name}}</option>
     </select>
 </div>
 <div>
-    <li *ngFor=" let employee of data.employees">
-        <div>
-            Employee Id: {{employee.employee_id}}
-        </div>
-        <div>
-            Employee Name: {{employee.name}}
-        </div>
-        <div>
-            Employee Address: {{employee.address}}
-        </div>
-        <div>
-            Employee email: {{employee.email}}
-        </div>
+    <li *ngFor=" let employee of data.employees | departmentFilter:selectedDepartment">
+        <div>ID: {{employee.employee_id}}</div>
+        <div>Name: {{employee.name}}</div>
+        <div>Address: {{employee.address}}</div>
+        <div>Email: {{employee.email}}</div>
+        <div>Department: {{employee.department_name}}</div>
     </li>
 
 </div>

@@ -8,4 +8,6 @@ export class Employee {
     bank_sort: number;
     start_salary: number;
     salary: number;
+    department_name: string;
+    department_id: number;
 }

@@ -7,12 +7,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { EmpDetailsComponent } from './emp-details/emp-details.component';
+import { DepartmentFilterPipe } from './department-filter.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     AddEmployeeComponent,
-    EmpDetailsComponent
+    EmpDetailsComponent,
+    DepartmentFilterPipe
   ],
   imports: [
     BrowserModule,
