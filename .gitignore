@@ -212,4 +212,6 @@ typings/
 # Ignore all local history of files
 .history
 
-# End of https://www.gitignore.io/api/node,macos,intellij,visualstudiocode
+#; End of https://www.gitignore.io/api/node,macos,intellij,visualstudiocode
+
+*.env
