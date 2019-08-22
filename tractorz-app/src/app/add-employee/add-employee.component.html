@@ -51,7 +51,7 @@
             <div class="form">
                 <label for="department_id">Department:</label>
                 <select class="pretty" [(ngModel)]="newEmployee.department_id" name="department_id" required>
-                    <option *ngFor="let department of data.departments" value="{{department.department_id}}">{{department.department_name}}</option>
+                    <option class="pretty" *ngFor="let department of data.departments" value="{{department.department_id}}">{{department.department_name}}</option>
                 </select>
             </div>
             <div class="form" *ngIf="newEmployee.department_id==1">
