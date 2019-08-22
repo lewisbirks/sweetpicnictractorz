@@ -1,25 +1,8 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
+<div class="main">
   <h1>
     Welcome to {{ title }}!
   </h1>
-  <h2>List of all Employees</h2>
-  <div>
-    <ul>
-      <li *ngFor="let employee of data.employees">
-        <div>
-          Employee Id: {{employee.employee_id}}
-        </div>
-        <div>
-          Employee Name: {{employee.name}}
-        </div>
-        <div>
-          Employee Address: {{employee.address}}
-        </div>
-        <div>
-          Employee email: {{employee.email}}
-        </div>
-      </li>
-    </ul>
-  </div>
+  <tractorz-add-employee></tractorz-add-employee>
+  <h2>Employee Detail</h2>
+  <tractorz-emp-details></tractorz-emp-details>
 </div>
