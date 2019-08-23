@@ -3,157 +3,124 @@ const app = express();
 const bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 const db = require('./db.js');
 
-// Error handling is very messy but I can't think how to make it nicer
+function handleError(err, req, res) {
+  if (err.errno === 3819) err.code = "ER_CHECK_CONSTRAINT_VIOLATED";
+  console.error(`${err.errno} (${err.code}) : ${err.sqlMessage}`);
+  res.status(500).send({
+    message: 'Database error. ' + err.sqlMessage
+  });
+}
 
 ////////////////////////////////////////////////////////////////////
 ///                        Employee                              ///
 ////////////////////////////////////////////////////////////////////
 
-app.get('/employee', function (req, res) {
-  db.getEmployees(function (employees) {
-    res.send(employees);
-  }, function (error) {
-    console.log(error.code);
-    console.log(error.sqlMessage);
-    res.status(500).send({
-      message: 'Database error. ' + error.sqlMessage
-    });
+app.get('/employee', (req, res) => {
+  db.getEmployees((err, rows) => {
+    if (err) return handleError(err, req, res);
+    res.send(rows);
   });
 });
 
-app.get('/employee/:id', function (req, res) {
-  let id = req.params.id;
-  db.getEmployeeById(id, function (rows) {
+app.get('/employee/:id', (req, res) => {
+  const id = req.params.id;
+  db.getEmployeeById(id, (err, rows) => {
+    if (err) return handleError(err, req, res);
     res.send(rows[0]);
-  }, function (error) {
-    console.log(error.code);
-    console.log(error.sqlMessage);
-    res.status(500).send({
-      message: 'Database error. ' + error.sqlMessage
-    });
-  })
+  });
 });
 
-app.post('/employee', function (req, res) {
-  let body = req.body;
-  if (!body.hasOwnProperty("commission_rate")) {
-    console.log("Adding employee");
-    addEmployee(body, res);
-  } else {
+app.post('/employee', (req, res) => {
+  if (req.body.commission_rate) {
     console.log("Adding sales employee");
-    addSalesEmployee(body, res);
+    addSalesEmployee(req, res);
+  } else {
+    console.log("Adding employee");
+    addEmployee(req, res);
   }
 });
 
-function addEmployee(employee, res) {
-  db.addEmployee(employee, function (employee_id) {
-    db.getEmployeeById(employee_id, function (rows) {
+function addEmployee(req, res) {
+  const employee = {
+    employee_id: req.body.employee_id,
+    name: req.body.name,
+    address: req.body.address,
+    email: req.body.email,
+    nin: req.body.nin,
+    bank_number: req.body.bank_number,
+    bank_sort: req.body.bank_sort,
+    start_salary: req.body.start_salary,
+    salary: req.body.salary,
+    department_id: req.body.department_id
+  };
+  db.addEmployee(employee, (err, insertedId) => {
+    if (err) return handleError(err, req, res);
+    db.getEmployeeById(insertedId, (err, rows) => {
+      if (err) return handleError(err, req, res);
       res.send(rows[0]);
-    }, function (error) {
-      console.log(error.code);
-      console.log(error.sqlMessage);
-      res.status(500).send({
-        message: 'Database error. ' + error.sqlMessage
-      });
     })
-  }, function (error) {
-    console.log(error.code);
-    console.log(error.sqlMessage);
-    res.status(500).send({
-      message: 'Database error. ' + error.sqlMessage
-    });
-  })
-
+  });
 }
 
 ////////////////////////////////////////////////////////////////////
 ///                       Department                             ///
 ////////////////////////////////////////////////////////////////////
 
-app.get('/department', function (req, res) {
-  db.getDepartments(function (departments) {
-    res.send(departments);
-  }, function (error) {
-    console.log(error.code);
-    console.log(error.sqlMessage);
-    res.status(500).send({
-      message: 'Database error. ' + error.sqlMessage
-    });
+app.get('/department', (req, res) => {
+  db.getDepartments((err, rows) => {
+    if (err) return handleError(err, req, res);
+    res.send(rows);
   });
 });
 
-app.post('/department', function (req, res) {
-  db.addDepartment(req.body, function (department_id) {
-    db.getDepartmentById(department_id, function (rows) {
+app.post('/department', (req, res) => {
+  db.addDepartment(req.body, (err, insertedId) => {
+    if (err) return handleError(err, req, res);
+    db.getDepartmentById(insertedId, (err, rows) => {
+      if (err) return handleError(err, req, res);
       res.send(rows[0]);
-    }, function (error) {
-      console.log(error.code);
-      console.log(error.sqlMessage);
-      res.status(500).send({
-        message: 'Database error. ' + error.sqlMessage
-      });
-    })
-  }, function (error) {
-    console.log(error.code);
-    console.log(error.sqlMessage);
-    res.status(500).send({
-      message: 'Database error. ' + error.sqlMessage
     });
-  })
+  });
 });
 
 ////////////////////////////////////////////////////////////////////
 ///                       Sales Employee                         ///
 ////////////////////////////////////////////////////////////////////
 
-function addSalesEmployee(fullEmployee, res) {
+function addSalesEmployee(req, res) {
   const employee = {
-    employee_id: fullEmployee.employee_id,
-    name: fullEmployee.name,
-    address: fullEmployee.address,
-    email: fullEmployee.email,
-    nin: fullEmployee.nin,
-    bank_number: fullEmployee.bank_number,
-    bank_sort: fullEmployee.bank_sort,
-    start_salary: fullEmployee.start_salary,
-    salary: fullEmployee.salary,
-    department_id: fullEmployee.department_id
+    employee_id: req.body.employee_id,
+    name: req.body.name,
+    address: req.body.address,
+    email: req.body.email,
+    nin: req.body.nin,
+    bank_number: req.body.bank_number,
+    bank_sort: req.body.bank_sort,
+    start_salary: req.body.start_salary,
+    salary: req.body.salary,
+    department_id: req.body.department_id
   };
 
   const sales = {
-    employee_id: fullEmployee.employee_id,
-    commission_rate: fullEmployee.commission_rate,
+    employee_id: req.body.employee_id,
+    commission_rate: req.body.commission_rate,
   };
 
-  db.addEmployee(employee, function () {
-    db.addSalesEmployee(sales, function (employee_id) {
-      db.getEmployeeById(employee_id, function (rows) {
-        res.send(rows[0]);
-      }, function (error) {
-        console.log(error.code);
-        console.log(error.sqlMessage);
-        res.status(500).send({
-          message: 'Database error. ' + error.sqlMessage
-        });
-      })
-    }, function (error) {
-      console.log(error.code);
-      console.log(error.sqlMessage);
-      res.status(500).send({
-        message: 'Database error. ' + error.sqlMessage
-      });
-    })
-  }, function (error) {
-    console.log(error.code);
-    console.log(error.sqlMessage);
-    res.status(500).send({
-      message: 'Database error. ' + error.sqlMessage
-    });
+  db.addEmployee(employee, (err, insertedId) => {
+    if (err) return handleError(err, req, res);
 
+    db.addSalesEmployee(sales, (err, insertedId) => {
+      if (err) return handleError(err, req, res);
+
+      db.getEmployeeById(insertedId, (err, rows) => {
+        if (err) return handleError(err, req, res);
+        res.send(rows[0]);
+      });
+    });
   });
 }
 
